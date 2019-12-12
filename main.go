@@ -18,7 +18,15 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!\n")
+		return c.HTML(http.StatusOK, "<strong>Hello, World!</strong>")
+	})
+
+	e.GET("/ping", func(c echo.Context) error {
+		type Message struct {
+			Message string `json:"message"`
+		}
+		m := &Message{"pong"}
+		return c.JSON(http.StatusOK, &m)
 	})
 
 	// Start server
